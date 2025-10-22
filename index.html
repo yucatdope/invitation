@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>You're Invited!</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #ffe4ec, #e2f0ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    /* 💌 Envelope Styles */
+    .envelope {
+      position: relative;
+      width: 280px;
+      height: 180px;
+      background: #b30000;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      cursor: pointer;
+      transition: transform 0.8s ease;
+    }
+
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: #800000;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top;
+      transition: transform 0.8s ease;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .envelope.opened .flap {
+      transform: rotateX(180deg);
+    }
+
+    .letter {
+      position: absolute;
+      top: 30px;
+      left: 10px;
+      right: 10px;
+      background: #fff;
+      height: 140px;
+      border-radius: 8px;
+      padding: 1rem;
+      transform: translateY(100%);
+      transition: transform 1s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .envelope.opened .letter {
+      transform: translateY(0);
+    }
+
+    /* 📜 Invitation Card */
+    .card {
+      display: none;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      padding: 2rem;
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      color: #b30000;
+      font-size: 1.8rem;
+    }
+
+    input {
+      width: 80%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-top: 1.2rem;
+      font-size: 1rem;
+    }
+
+    button {
+      margin-top: 1rem;
+      background-color: #b30000;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #800000;
+    }
+
+    #event-details {
+      display: none;
+      margin-top: 2rem;
+      text-align: left;
+      background: #f8faff;
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .highlight {
+      color: #b30000;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 💌 Envelope -->
+  <div class="envelope" id="envelope">
+    <div class="flap"></div>
+    <div class="letter">
+      <h3>💌 Click to open your invitation</h3>
+      <p>From: yucatdope</p>
+    </div>
+  </div>
+
+  <!-- 🎉 Invitation Card -->
+  <div class="card" id="inviteCard">
+    <h1>🎉 You're Invited! 🎉</h1>
+    <p>Enter your name to view your exclusive event details</p>
+    <input type="text" id="nameInput" placeholder="Your full name">
+    <button onclick="checkName()">Access Invitation</button>
+
+    <div id="event-details">
+      <h2>San's Birthday Celebration!</h2>
+      <p><span class="highlight">Date:</span> Sunday, 26 October 2025</p>
+      <p><span class="highlight">Time:</span> 11:00AM – 10:00PM</p>
+      <p><span class="highlight">Meeting Point:</span> Yishun MRT</p>
+      <p><span class="highlight">Dress Code:</span> Comfortable, Shorts, NB530</p>
+      <p><span class="highlight">Schedule:</span></p>
+      <ul>
+        <li>11 AM @ Brunch</li>
+        <li>2 PM @ Activity</li>
+        <li>6 PM @ Gochu Korean Dining</li>
+      </ul>
+      <p>Can't Wait!</p>
+    </div>
+  </div>
+
+  <script>
+    const envelope = document.getElementById('envelope');
+    const inviteCard = document.getElementById('inviteCard');
+    const validNames = [
+      "Crystal", "crystal", "sansan", "Sansan", "Broc",
+      "Crystal Li Sansan", "Crystal Li", "crystal li sansan", "Li Sansan", "li", "Li"
+    ];
+
+    envelope.addEventListener('click', () => {
+      envelope.classList.add('opened');
+      setTimeout(() => {
+        envelope.style.display = 'none';
+        inviteCard.style.display = 'block';
+      }, 1800);
+    });
+
+    function checkName() {
+      const input = document.getElementById("nameInput").value.trim();
+      const eventDiv = document.getElementById("event-details");
+
+      if (validNames.some(n => n.toLowerCase() === input.toLowerCase())) {
+        eventDiv.style.display = "block";
+      } else {
+        alert("Hmm... name not found on the invite list 😢");
+      }
+    }
+  </script>
+</body>
+</html>
